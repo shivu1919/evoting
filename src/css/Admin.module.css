@@ -1,0 +1,44 @@
+#main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 20px;
+}
+
+#main>button{
+    height: 45px;
+    width:240px;
+    font-size: 20px;
+    background-color: white;
+    border: 1px solid black;
+    color: blue;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#addVoterFormHidden{
+    display: none;
+}
+
+#addVoterFormShow{
+    width: 400px;
+    top:80px;
+    left:400px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+    padding: 40px;
+    background-color: coral;
+}
+
+#addVoterFormShow>input,select{
+    height: 45px;
+    width: 250px;
+    font-size: 20px;
+    border: 1px solid black;
+    outline: none;
+}

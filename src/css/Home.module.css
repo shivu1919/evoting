@@ -1,0 +1,127 @@
+#header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20px;
+    background-color: blue;
+}
+
+#head{
+    background: linear-gradient(orange, white, green);
+    font-size: 40px;
+    color: transparent;
+    background-clip: text;
+}
+
+#first{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#first button{
+    height: 45px;
+    width: fit-content;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    background-color: blue;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+
+#adminForm{
+    position: absolute;
+    left:40%;
+    display: none;
+    width: fit-content;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 20px;
+    padding: 20px;
+    border: 1px solid black;
+    background-color: rgba(255, 0, 0, 0.639);
+}
+
+#adminFormShow{
+    position: absolute;
+    left:40%;
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 20px;
+    padding: 20px;
+    border: 1px solid black;
+    background-color: rgba(255, 0, 0, 0.639);
+}
+
+
+#adminFormShow>input{
+    height: 45px;
+    width:300px;
+    border: 1px solid black;
+    outline: none;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+#adminFormShow>button{
+   
+    height:45px;
+    width: fit-content;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+#userForm{
+    display: none;
+}
+
+
+#userFormShow{
+    position: absolute;
+    left:40%;
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 20px;
+    padding: 20px;
+    border: 1px solid black;
+    background-color: rgba(255, 0, 0, 0.639);
+}
+
+#userFormShow>input{
+    height: 45px;
+    width:300px;
+    border: 1px solid black;
+    outline: none;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+
+#userFormShow>button{   
+    height:45px;
+    width: fit-content;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+}
