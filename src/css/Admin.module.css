@@ -42,3 +42,88 @@
     border: 1px solid black;
     outline: none;
 }
+
+#addVoterFormShow>button{
+    height: 45px;
+    width: fit-content;
+    border: none;
+    border-radius: 12px;
+    background-color: blue;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+#delFormShow{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+    background-color: coral;
+    position: absolute;
+    top:70px;
+    left:40%;
+    padding: 20px;
+}
+
+#delFormHidden{
+    display: none;
+}
+
+
+#delFormShow>input{
+    height: 45px;
+    width: 250px;
+    font-size: 18px;
+    border: 1px solid black;
+    outline: none;
+}
+
+#delFormShow>button{
+    height: 45px;
+    width: fit-content;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: blue;
+    color: white;
+}
+
+#eleFormHidden{
+    display: none;
+}
+
+#eleFormShow{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+    background-color: coral;
+    position: absolute;
+    top:60px;
+    left:40%;
+    padding: 20px;
+}
+
+#eleFormShow>input{
+    height: 45px;
+    width: 250px;
+    font-size: 18px;
+    border: 1px solid black;
+    outline: none;
+}
+
+#eleFormShow>button{
+    height: 45px;
+    background-color: blue;
+    color: white;
+    width: fit-content;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+}

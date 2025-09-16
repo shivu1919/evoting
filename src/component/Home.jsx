@@ -47,7 +47,12 @@ function Home() {
                     alert("Wrong credentials")
                 }
                 else{
-                    navigate("/voter")
+                    navigate("/voter", {
+                        state:{
+                            name: res.data.name,
+                            adhar: res.data.adhar
+                        }
+                    })
                 }
             })
         }
