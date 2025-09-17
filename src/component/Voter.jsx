@@ -1,15 +1,19 @@
 import React from 'react'
-import { useLocation, useSearchParams } from 'react-router-dom'
-import axios from 'axios';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
+import vstyle from "../css/Voter.module.css"
 
 function Voter() {
 
   const location = useLocation();
+  const navigate = useNavigate();
   
   const {name, adhar} = location.state || {}
 
   const[election, setElection] = useState('')
+  const[conForm, setConForm] = useState(vstyle.contestFormHidden)
+  const[symbol, setSymbol] = useState('')
 
 
   function checkElection(){
@@ -21,6 +25,35 @@ function Voter() {
 
   checkElection()
 
+
+  function becomeLeader(){
+      if(symbol.trim()==''|| name=='' || adhar==''){
+        alert("Cannot proceed because of incomplete details")
+      }
+
+      else{
+          axios.post("http://localhost:8080/voter/contestElection", {
+              adhar: adhar,
+              name: name,
+              symbol: symbol
+          })
+          .then((res)=>{
+            if(res.data=="Best wishes for election"){
+                alert("You are a leader now, best wishes for election")
+                setConForm(vstyle.contestFormHidden)
+            }
+            else{
+                alert("Something went wrong, please contact admin")
+                setConForm(vstyle.contestFormHidden)
+            }
+          })
+      }
+  }
+
+  function goToElection(){
+      navigate("/election")
+  }
+
   return (
     <>
         <div style={{display:"flex", alignItems:"center", justifyContent:"space-around"}}>
@@ -31,6 +64,26 @@ function Voter() {
         <marquee>
           <h1>Upcoming election: {election}</h1>
         </marquee>
+
+
+        <div id={vstyle.main}>
+            <button onClick={()=> setConForm(vstyle.contestFormShow)}>Contest Election</button>
+
+            <button onClick={goToElection}>Cast your vote</button>
+        </div>
+
+
+        <div id={conForm}>
+            <img src="close-button.png" width="40" onClick={()=> setConForm(vstyle.contestFormHidden)}/>
+            <h1>Become a leader</h1>
+            <input 
+            type="text" 
+            placeholder='Please enter your party symbol'
+            value={symbol}
+            onChange={(event)=> setSymbol(event.target.value)}
+            />
+            <button onClick={becomeLeader}>Continue</button>
+        </div>
     </>
   )
 }
