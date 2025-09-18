@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import hstyle from "../css/Home.module.css"
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -14,6 +14,7 @@ function Home() {
     const[apassword, setAPassword] = useState('')
     const[uadhar, setUAdhar] = useState('')
     const[umob, setUMob] = useState('')
+    const[result, setResult] = useState('')
 
     function showAdminForm(){
         setAfid(hstyle.adminFormShow)
@@ -27,7 +28,11 @@ function Home() {
             axios.post(`http://localhost:8080/admin/login?email=${aemail}&password=${apassword}`)
             .then((res)=> {
                 if(res.data){
-                    navigate("/admin")
+                    navigate("/admin", {
+                        state:{
+                            authorized: true
+                        }
+                    })
                 }
                 else{
                     alert("Wrong credentials")
@@ -58,6 +63,17 @@ function Home() {
         }
     }
 
+    useEffect(()=>{
+        axios.get("http://localhost:8080/election/result")
+        .then((res)=>{
+            if(res.data=="None"){
+                setResult("Winner not decided yet")
+            }else{
+                setResult(res.data+ " is winner")
+            }
+        })
+    }, [])
+
   return (
     <>
         <header id={hstyle.header}>
@@ -73,6 +89,10 @@ function Home() {
             </div>
         </header>
         <hr />
+
+        <marquee>
+            <h1>{result}</h1>
+        </marquee>
 
         <div id={hstyle.first}>
             <div>

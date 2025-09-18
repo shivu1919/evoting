@@ -1,12 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import astyle from '../css/Admin.module.css'
 import axios from 'axios'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function Admin() {
 
+  const navigate = useNavigate()
+
+  const location = useLocation()
+  const { authorized } = location.state || false
+
+
+
   const [addid, setAddId] = useState(astyle.addVoterFormHidden)
   const [delid, setDelId] = useState(astyle.delFormHidden)
-  const[eleid, setEleId] = useState(astyle.eleFormHidden)
+  const [eleid, setEleId] = useState(astyle.eleFormHidden)
 
   const [adhar, setAdhar] = useState('')
   const [name, setName] = useState('')
@@ -14,9 +22,9 @@ function Admin() {
   const [gender, setGender] = useState('')
   const [mob, setMob] = useState('')
 
-  const[electionId, setElectionId] = useState('')
-  const[electionName, setElectionName] = useState('')
-  const[electionDate, setElectionDate] = useState('')
+  const [electionId, setElectionId] = useState('')
+  const [electionName, setElectionName] = useState('')
+  const [electionDate, setElectionDate] = useState('')
 
 
   function addVoter() {
@@ -72,34 +80,43 @@ function Admin() {
   }
 
 
-  function createElection(){
-      if(electionId=='' || electionName=='' || electionDate==''){
-        alert("Please fill all the details")
-      }
-      else{
-        axios.post('http://localhost:8080/admin/createElection',{
-          id: electionId,
-          name: electionName,
-          date: electionDate
-        })
-        .then((res)=>{
-          if(res.data){
+  function createElection() {
+    if (electionId == '' || electionName == '' || electionDate == '') {
+      alert("Please fill all the details")
+    }
+    else {
+      axios.post('http://localhost:8080/admin/createElection', {
+        id: electionId,
+        name: electionName,
+        date: electionDate
+      })
+        .then((res) => {
+          if (res.data) {
             alert("Election created successfully")
             setElectionId('')
             setElectionDate('')
             setElectionName('')
             setEleId(astyle.eleFormHidden)
           }
-          else{
+          else {
             alert("Cannot create election")
-             setElectionId('')
+            setElectionId('')
             setElectionDate('')
             setElectionName('')
             setEleId(astyle.eleFormHidden)
           }
         })
-      }
+    }
   }
+
+
+  useEffect(() => {
+    if (!authorized) {
+      alert("Please login first")
+      navigate("/")
+      console.log("navigated to home page")
+    }
+  }, [])
 
 
   return (
@@ -111,7 +128,7 @@ function Admin() {
       <div id={astyle.main}>
         <button onClick={() => setAddId(astyle.addVoterFormShow)}>Add a new Voter</button>
         <button onClick={() => setDelId(astyle.delFormShow)}>Delete a Voter</button>
-        <button onClick={()=> setEleId(astyle.eleFormShow)}>Announce the election</button>
+        <button onClick={() => setEleId(astyle.eleFormShow)}>Announce the election</button>
       </div>
 
 
@@ -174,31 +191,31 @@ function Admin() {
 
 
       <div id={eleid}>
-          <img src="close-button.png" width="40"  onClick={()=> setEleId(astyle.eleFormHidden)}/>
+        <img src="close-button.png" width="40" onClick={() => setEleId(astyle.eleFormHidden)} />
 
-          <h1>Announce a new election</h1>
+        <h1>Announce a new election</h1>
 
-          <input 
-          type="text" 
+        <input
+          type="text"
           placeholder='Enter election ID'
           value={electionId}
-          onChange={(event)=> setElectionId(event.target.value)}
-          />
+          onChange={(event) => setElectionId(event.target.value)}
+        />
 
-          <input 
+        <input
           type="text"
           placeholder='Enter election name'
           value={electionName}
-          onChange={(event)=> setElectionName(event.target.value)}
-           />
+          onChange={(event) => setElectionName(event.target.value)}
+        />
 
-          <input 
+        <input
           type="date"
           value={electionDate}
-          onChange={(event)=> setElectionDate(event.target.value)}
-          />
+          onChange={(event) => setElectionDate(event.target.value)}
+        />
 
-          <button onClick={createElection}>Create Election</button>
+        <button onClick={createElection}>Create Election</button>
       </div>
     </>
   )

@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import estyle from "../css/Election.module.css"
 import axios from 'axios'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function Election() {
+
+    const navigate = useNavigate()
+    const location = useLocation()
+    const{ano} = location.state || ''
+
+    useEffect(()=>{
+        if(ano==null){
+            alert("please login")
+            navigate("/")
+        }
+    }, [])
 
     const [response, setResponse] = useState('')
     const [leader, setLeader] = useState([])
     const [status, setStatus] = useState(false)
+
+    const[option, setOption] = useState('')
 
 
     function checkElection() {
@@ -33,6 +47,25 @@ function Election() {
         checkAllLeader()
     }, [])
 
+
+    function castVote(){
+        axios.post("http://localhost:8080/election/castVote", {
+            adhar: ano,
+            symbol: option
+        })
+
+        .then((res)=>{
+            if(res.data){
+                alert("Casted the vote successfully")
+                navigate("/")
+            }
+            else{
+                alert("You have already casted the vote")
+                navigate("/")
+            }
+        })
+    }
+
     return (
         <>
             <marquee>
@@ -56,13 +89,19 @@ function Election() {
                                 <td>{item.name}</td>
                                 <td>{item.symbol}</td>
                                 <td>
-                                    <input id={item.symbol} type="radio" name="candidate" />
+                                    <input 
+                                    id={item.symbol} 
+                                    type="radio" 
+                                    name="candidate" 
+                                    value={option}
+                                    onChange={()=>setOption(item.symbol)}
+                                    />
                                 </td>
                             </tr>
                         )}
                     </table>
                         <br /><br /><br />
-                    <button id={estyle.votebtn}>Cast your vote</button>
+                    <button id={estyle.votebtn} onClick={castVote}>Cast your vote</button>
                 </div>}
             </center>
         </>

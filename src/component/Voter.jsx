@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
@@ -10,6 +10,8 @@ function Voter() {
   const navigate = useNavigate();
   
   const {name, adhar} = location.state || {}
+
+  console.log(name)
 
   const[election, setElection] = useState('')
   const[conForm, setConForm] = useState(vstyle.contestFormHidden)
@@ -51,8 +53,21 @@ function Voter() {
   }
 
   function goToElection(){
-      navigate("/election")
+      navigate("/election", {
+        state:{
+          ano: adhar
+        }
+      })
   }
+
+
+  useEffect(()=>{
+    if(name==undefined){
+      alert("Please login first")
+      navigate("/")
+    }
+  }, [])
+
 
   return (
     <>
